@@ -15,3 +15,21 @@ library(weights)
 library(car)
 library(rgl)
 library(GeoXp)
+
+#My own working directory
+setwd('C:/Users/Yeimi/Desktop/Trabajo R/CANTONES')
+list.files()
+dir()
+getwd()
+
+#get shapefile info
+getinfo.shape("cantones.shp")
+
+#Load the shapefile cantones
+cantones <- readShapeSpatial("cantones.shp")
+
+#Check info
+summary(cantones)
+
+plot(cantones)
+
