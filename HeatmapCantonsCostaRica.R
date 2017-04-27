@@ -17,6 +17,7 @@ library(rgl)
 library(GeoXp)
 
 #My own working directory
+#Colocar la dirección del directorio donde tienes los archivos de cantones que me enviaste.
 setwd('C:/Users/Yeimi/Desktop/Trabajo R/CANTONES')
 list.files()
 dir()
@@ -33,3 +34,7 @@ summary(cantones)
 
 plot(cantones)
 
+#Load information about human develop Costa Rica (format xlsx)
+library(readxl)
+datos_desarrollo_humano_CR <- read_excel("C:/Users/Yeimi/Desktop/Trabajo R/datos desarrollo humano Costa Rica.xlsx")
+View(datos_desarrollo_humano_CR)
