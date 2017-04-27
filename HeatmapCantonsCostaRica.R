@@ -32,9 +32,27 @@ cantones <- readShapeSpatial("cantones.shp")
 #Check info
 summary(cantones)
 
+#Draw cantons of Costa Rica
 plot(cantones)
+
+#Check cantones
+#mode(cantones)
+
+#Names of the columns
+#names(cantones)
+
+#Table cantones
+View(cantones)
+
+#Data of cantones
+#cantones@data
+
+#Amount of cantons
+#length(cantones)
 
 #Load information about human develop Costa Rica (format xlsx)
 library(readxl)
 datos_desarrollo_humano_CR <- read_excel("C:/Users/Yeimi/Desktop/Trabajo R/datos desarrollo humano Costa Rica.xlsx")
 View(datos_desarrollo_humano_CR)
+
+
