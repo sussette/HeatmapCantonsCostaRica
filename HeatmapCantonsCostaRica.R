@@ -51,8 +51,16 @@ View(cantones)
 #length(cantones)
 
 #Load information about human develop Costa Rica (format xlsx)
+#Plot this information
 library(readxl)
 datos_desarrollo_humano_CR <- read_excel("C:/Users/Yeimi/Desktop/Trabajo R/datos desarrollo humano Costa Rica.xlsx")
 View(datos_desarrollo_humano_CR)
+
+#Extract the information to plot.
+datos_indice_2000 <- as.data.frame(datos_desarrollo_humano_CR[(2:82),6])
+#Check it.
+View(datos_indice_2000)
+#name the column
+names(datos_indice_2000) <- "indice_2000"
 
 
