@@ -5,6 +5,7 @@
 
 #################################################################################################
 #Install the libraries of spatial utilities
+#Run this command only the first time
 install.packages(c("sp", "spdep", "classInt", "maptools", "RgoogleMaps", "rgdal",
                    "ggplot2","weights", "car", "rgl", "GeoXp","Matrix"))
 
@@ -27,7 +28,7 @@ library(rgl)
 library(GeoXp)
 
 #My own working directory
-#Colocar la dirección del directorio donde tienes los archivos de cantones que me enviaste.
+#Use your own directory
 setwd('C:/Users/Yeimi/Desktop/Trabajo R/CANTONES')
 list.files()
 dir()
@@ -73,23 +74,43 @@ View(datos_indice_2000)
 #name the column
 names(datos_indice_2000) <- c("N_provincia","N_canton","indice_2000")
 
-#Mismo numero de filas
+#Set the same amount of rows
 row.names(cantones) <- row.names(datos_indice_2000)
 View(cantones)
 
-#Ordenar los cantones del shapefile antes de agregarlo a cantones.data
+#Check that the shapefile and file have the same order of provinces and cantons, if not 
+#Order the provinces  and cantons of the shapefile and the file with the information to plot.
 cantones.data <- SpatialPolygonsDataFrame(cantones,datos_indice_2000)
-plotvar <- as.double(cantones.data$indice_2000)
-nclr <- 5 #Número de colores
-plotclr <- brewer.pal(nclr,"Blues")
-class <- classIntervals(round(plotvar,3)*100,nclr,style = "quantile")#Aquí fijo el número de decimales
-colcode <- findColours(class,plotclr) #Defino la paleta de colores
 
+#Convert the variable´s character class to double class to be plot it.
+plotvar <- as.double(cantones.data$indice_2000)
+
+#Colours numbers
+nclr <- 5 
+
+#Choose the amount and shade of blue.
+plotclr <- brewer.pal(nclr,"Blues")
+
+#Here, set the numbers of decimals.
+class <- classIntervals(round(plotvar,3)*100,nclr,style = "quantile")
+
+#Define the palette of colours.
+colcode <- findColours(class,plotclr)
+
+#Make an image with jpeg format.
 jpeg("MapaCantonesIndiceDesarrollo.jpeg", quality = 100, height = 2400, width = 2200)
+
+#Draw the map with the shade.
 plot(cantones.data, col = colcode, border = "grey", axes = T)
+
+#Title of the map
 title(main = "Indice de desarrollo del año 2000", cex = 1)
+
+#Brief description of the decimals parameters and your proportional color. 
 legend("bottomright", legend = names(attr(colcode, "table")),
       fill = attr(colcode, "palette"), cex = 1.25)
+
+#Finish the graphical control.
 dev.off()
 
 
