@@ -1,8 +1,14 @@
-#Install the libraries of spatial utilities
-install.packages(c("sp", "spdep", "classInt", "maptools", "RgoogleMaps", "rgdal", "ggplot2",
-                   "weights", "car", "rgl", "GeoXp","Matrix"))
+#################################################################################################
+#Author: Yeimi Sussette Cruz Carrillo
+#Date: 04/05/2017
+#Title: Heatmap of human develpment index Costa Rica
 
-#Clean the enviroment
+#################################################################################################
+#Install the libraries of spatial utilities
+install.packages(c("sp", "spdep", "classInt", "maptools", "RgoogleMaps", "rgdal",
+                   "ggplot2","weights", "car", "rgl", "GeoXp","Matrix"))
+
+#Clean the environment
 rm(list = ls())
 
 #Open libraries of spatial utilities
