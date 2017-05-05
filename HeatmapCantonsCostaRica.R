@@ -2,11 +2,15 @@
 install.packages(c("sp", "spdep", "classInt", "maptools", "RgoogleMaps", "rgdal", "ggplot2",
                    "weights", "car", "rgl", "GeoXp","Matrix"))
 
+#Clean the enviroment
+rm(list = ls())
+
 #Open libraries of spatial utilities
 library(sp)
 library(Matrix)
 library(spdep)
 library(classInt)
+library(RColorBrewer)
 library(maptools)
 library(RgoogleMaps)
 library(rgdal)
@@ -57,10 +61,29 @@ datos_desarrollo_humano_CR <- read_excel("C:/Users/Yeimi/Desktop/Trabajo R/datos
 View(datos_desarrollo_humano_CR)
 
 #Extract the information to plot.
-datos_indice_2000 <- as.data.frame(datos_desarrollo_humano_CR[(2:82),6])
+datos_indice_2000 <- as.data.frame(datos_desarrollo_humano_CR[(2:82),c(2,4,6)])
 #Check it.
 View(datos_indice_2000)
 #name the column
-names(datos_indice_2000) <- "indice_2000"
+names(datos_indice_2000) <- c("N_provincia","N_canton","indice_2000")
+
+#Mismo numero de filas
+row.names(cantones) <- row.names(datos_indice_2000)
+View(cantones)
+
+#Ordenar los cantones del shapefile antes de agregarlo a cantones.data
+cantones.data <- SpatialPolygonsDataFrame(cantones,datos_indice_2000)
+plotvar <- as.double(cantones.data$indice_2000)
+nclr <- 5 #Número de colores
+plotclr <- brewer.pal(nclr,"Blues")
+class <- classIntervals(round(plotvar,3)*100,nclr,style = "quantile")#Aquí fijo el número de decimales
+colcode <- findColours(class,plotclr) #Defino la paleta de colores
+
+jpeg("MapaCantonesIndiceDesarrollo.jpeg", quality = 100, height = 2400, width = 2200)
+plot(cantones.data, col = colcode, border = "grey", axes = T)
+title(main = "Indice de desarrollo del año 2000", cex = 1)
+legend("bottomright", legend = names(attr(colcode, "table")),
+      fill = attr(colcode, "palette"), cex = 1.25)
+dev.off()
 
 
